@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="githubInstance">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Github Instance Search</title>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container" ng-controller="githubInstance">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <input type="text" ng-model="searchToken" id="search_input_id" class="form-control"
+               required="required" ng-keyup="resolve_data($event,searchToken)">
+
+        <br/>
+        <strong> {{searchToken}}</strong>
+    </div>
+</div>
+
+<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./bower_components/angular/angular.min.js"></script>
+<script src="./bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

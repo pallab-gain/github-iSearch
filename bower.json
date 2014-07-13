@@ -1,0 +1,28 @@
+{
+    "name": "github-iSearch",
+    "version": "0.0.0",
+    "authors": [
+        "pallab-gain <pallab.gain@gmail.com>"
+    ],
+    "description": "github instance search",
+    "dependencies": {
+        "angular": "latest",
+        "bootstrap": "latest",
+        "jquery": "latest",
+        "angular-resource": "latest"
+    },
+    "keywords": [
+        "github",
+        "instance_search",
+        "angularJS"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
