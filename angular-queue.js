@@ -21,14 +21,17 @@
                         this.queue.push(item);
                     };
                     this.q_pop = function () {
+                        var deferred = $q.defer();
+
                         if (this.queue.length > 0) {
-                            return (function (item) {
+                            deferred.resolve((function (item) {
                                 this.queue.shift();
                                 return item;
-                            })(this.queue[0]);
+                            })(this.queue[0]));
                         } else {
-                            return null;
+                            deferred.resolve(null);
                         }
+                        return deferred.promise;
                     }
                 };
             }]);
