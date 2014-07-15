@@ -7,17 +7,39 @@
 </head>
 <body>
 <div class="container" ng-controller="githubInstance">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <input type="text"
-               required="required"
-               ng-model="searchToken"
-               class="form-control"
-               ng-model-options="{ debounce: 500 }"
-               ng-change="fetch_links()" >
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <input type="text"
+                   required="required"
+                   ng-model="searchToken"
+                   class="form-control"
+                   ng-model-options="{ debounce: 500 }"
+                   ng-change="fetch_links()">
+            <br/>
 
-        <br/>
-        <strong ng-bind="searchToken"></strong>
+            <p> Total Repository Found :
+                <strong ng-bind="data.total_count"></strong>
+            </p>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+            <!--list-->
+            <div class="well" ng-repeat="repo in data.items track by $index">
+                <span class="glyphicon glyphicon-link"></span>
+                <a href="{{repo.html_url}}">{{repo.full_name}}</a>
+                <p>Language: {{repo.language}}</p>
+                <a href="{{repo.owner.html_url}}">Owner: {{repo.owner.login}}</a>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <!--preview-->
+        </div>
+
+    </div>
+
 </div>
 
 <script src="./bower_components/jquery/dist/jquery.js"></script>

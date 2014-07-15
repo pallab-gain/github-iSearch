@@ -31,7 +31,5 @@ app.controller('githubInstance', function ($scope, searchRepo) {
                 });
 
         }
-
-
     }
 });
