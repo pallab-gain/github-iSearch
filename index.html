@@ -8,18 +8,23 @@
 <body>
 <div class="container" ng-controller="githubInstance">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <input type="text" ng-model="searchToken" id="search_input_id" class="form-control"
-               required="required" ng-keyup="resolve_data($event,searchToken)">
+        <input type="text"
+               required="required"
+               ng-model="searchToken"
+               class="form-control"
+               ng-model-options="{ debounce: 500 }"
+               ng-change="fetch_links()" >
 
         <br/>
-        <strong> {{searchToken}}</strong>
+        <strong ng-bind="searchToken"></strong>
     </div>
 </div>
 
-<script src="./bower_components/jquery/dist/jquery.min.js"></script>
-<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="./bower_components/angular/angular.min.js"></script>
-<script src="./bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="./bower_components/jquery/dist/jquery.js"></script>
+<script src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="./bower_components/angular/angular.js"></script>
+<!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular.min.js"></script>-->
+<script src="./bower_components/angular-resource/angular-resource.js"></script>
 <script src="./app.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@ app.factory('searchRepo', function ($resource) {
     );
     return searchRepo;
 });
+
 app.factory('slowDown', function () {
     var slowDown = {};
     slowDown.pressed = false;
@@ -46,26 +47,26 @@ app.factory('slowDown', function () {
     };
     return slowDown;
 });
-app.controller('githubInstance', function ($scope, searchRepo, slowDown) {
+app.controller('githubInstance', function ($scope, searchRepo) {
     $scope.searchToken = undefined;
+    $scope.fetch_links = function () {
+        var searchToken = ($scope.searchToken && $scope.searchToken.trim().replace(' ', '+') );
+        if (angular.isDefined(searchToken) && searchToken != null) {
+            searchRepo.get({
+                'query': searchToken,
+                'sort': 'stars',
+                'order': 'desc',
+                'callback': 'JSON_CALLBACK',
+                'per_page': 50
+            }).$promise.then(function (data) {
+                    if (angular.isDefined(data.data)) {
+                        $scope.data = data.data;
+                        console.log($scope.data);
+                    }
+                });
 
-    $scope.resolve_data = function (event, searchToken) {
-        searchToken = (searchToken && searchToken.trim().replace(' ', '+') );
-        slowDown.resolve(searchToken, function (status) {
-            if (status.ok === true) {
-                searchRepo.get({
-                    'query': searchToken,
-                    'sort': 'stars',
-                    'order': 'desc',
-                    'callback': 'JSON_CALLBACK',
-                    'per_page': 50
-                }).$promise.then(function (data) {
-                        if (angular.isDefined(data.data)) {
-                            $scope.data = data.data;
-                            console.log($scope.data);
-                        }
-                    });
-            }
-        });
+        }
+
+
     }
 });
