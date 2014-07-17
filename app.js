@@ -42,7 +42,7 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                 //console.log('scope ', myResource.name, myResource.data);
             }
         }
-    }]).directive('myResult', [function () {
+    }]).directive('myResult', ['searchRepo', function (searchRepo) {
         return {
             restrict: "A",
             replace: 'true',
@@ -50,6 +50,15 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
             link: function (scope, element, attrs) {
                 //console.log('scope ', myResource.name, myResource.data);
                 console.log(scope.data);
+            },
+            controller: function ($scope) {
+                $scope.index=0;
+                $scope.show_next = function () {
+
+                };
+                $scope.show_previous = function () {
+
+                };
             }
         }
     }]);
