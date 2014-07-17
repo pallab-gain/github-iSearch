@@ -8,30 +8,51 @@ angular.module('mySearchGitFactory', [])
             {'get': {'method': 'JSONP', 'cache': true}}
         );
         return searchRepo;
+    })
+    .factory('myResource', function () {
+        return {'name': 'pallab'}
     });
 angular.module('mySearchGitDirective', ['mySearchGitFactory'])
-    .directive('myHeader', function () {
+    .directive('myHeader', ['searchRepo', function (searchRepo) {
         return {
-            scope: {},
             restrict: "A",
             replace: 'true',
             templateUrl: './views/header.html',
             controller: function ($scope) {
-                $scope.searchToken = undefined;
                 $scope.fetch_links = function (token) {
                     token = (token && token.trim().replace(/ /g, '+') );
-                    console.log('token is ', token);
+                    if (angular.isDefined(token) && token != null) {
+                        searchRepo.get({
+                            'query': token,
+                            'sort': 'stars',
+                            'order': 'desc',
+                            'callback': 'JSON_CALLBACK',
+                            'per_page': 50
+                        }).$promise.then(function (data) {
+                                if (angular.isDefined(data.data)) {
+                                    $scope.data = data.data;
+                                    console.log($scope.data);
+                                }
+                            });
+
+                    }
                 }
+            },
+            link: function (scope, element, attrs) {
+                //console.log('scope ', myResource.name, myResource.data);
             }
         }
-    }).directive('myResult', function () {
+    }]).directive('myResult', [function () {
         return {
-            scope: {},
             restrict: "A",
             replace: 'true',
-            templateUrl: './views/result.html'
+            templateUrl: './views/result.html',
+            link: function (scope, element, attrs) {
+                //console.log('scope ', myResource.name, myResource.data);
+                console.log(scope.data);
+            }
         }
-    });
+    }]);
 
 angular.module("githubInstance", ['ngResource', 'mySearchGitDirective'])
     .controller('githubInstance', function ($scope, searchRepo) {
