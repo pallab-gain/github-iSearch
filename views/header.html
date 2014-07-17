@@ -1,0 +1,26 @@
+<div class="navbar navbar-default">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand ">GitHub iSearch</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse1">
+            <form class="navbar-form pull-left">
+                <div class="input-group" style="max-width:670px;">
+                    <input type="text" class="form-control" placeholder="Search"
+                           ng-model="searchToken"
+                           ng-model-options="{ debounce: 500 }"
+                           ng-change="fetch_links(searchToken)">
+
+                    <div class="input-group-btn">
+                        <button class="btn btn-default btn-primary" type="submit"><i
+                                class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
