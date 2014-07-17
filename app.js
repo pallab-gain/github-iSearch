@@ -27,7 +27,7 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                             'sort': 'stars',
                             'order': 'desc',
                             'callback': 'JSON_CALLBACK',
-                            'per_page': 50
+                            'per_page': 5
                         }).$promise.then(function (data) {
                                 if (angular.isDefined(data.data)) {
                                     $scope.data = data.data;
