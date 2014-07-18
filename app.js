@@ -27,7 +27,8 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                             'sort': 'stars',
                             'order': 'desc',
                             'callback': 'JSON_CALLBACK',
-                            'per_page': 5
+                            'per_page': 5,
+                            'page': $scope.index
                         }).$promise.then(function (data) {
                                 if (angular.isDefined(data.data)) {
                                     $scope.data = data.data;
@@ -52,12 +53,36 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                 console.log(scope.data);
             },
             controller: function ($scope) {
-                $scope.index=0;
-                $scope.show_next = function () {
+                $scope.index = 1;
+                $scope.fetch_data = function (type) {
+                    var token = $scope.searchToken;
+                    if (type == 'prev') {
+                        $scope.index -= 1;
+                        $scope.index = Math.max($scope.index, 1);
+                    } else {
+                        $scope.index += 1;
+                        if ($scope.index > Math.ceil($scope.data.total_count/5)) {
+                            $scope.index -= 1;
+                        }
+                    }
 
-                };
-                $scope.show_previous = function () {
 
+                    if (angular.isDefined(token) && token != null) {
+                        searchRepo.get({
+                            'query': token,
+                            'sort': 'stars',
+                            'order': 'desc',
+                            'callback': 'JSON_CALLBACK',
+                            'per_page': 5,
+                            'page': $scope.index
+                        }).$promise.then(function (data) {
+                                if (angular.isDefined(data.data)) {
+                                    $scope.data = data.data;
+                                    console.log($scope.data);
+                                }
+                            });
+
+                    }
                 };
             }
         }

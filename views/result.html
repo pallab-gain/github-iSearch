@@ -30,8 +30,8 @@
             </div>
         </div>
         <ul class="pager">
-            <li class="previous" ng-show="index>0"><a href="#">&larr; Old</a></li>
-            <li class="next" ng-show="index<data.total_count"><a href="#">New &rarr;</a></li>
+            <li class="previous" ng-show="index>1" ng-click="fetch_data('prev')"><a href="#">&larr; Old</a></li>
+            <li class="next" ng-show="data.total_count>index*5" ng-click="fetch_data('next')"><a href="#">New &rarr;</a></li>
         </ul>
     </div>
 </div>
