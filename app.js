@@ -42,7 +42,8 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                         }).$promise.then(function (data) {
                                 if (angular.isDefined(data.data)) {
                                     $scope.data = data.data;
-                                    if( angular.isDefined($scope.data)) {
+                                    $scope.readme = "";
+                                    if( angular.isDefined($scope.data) && angular.isDefined($scope.data.items)) {
                                         firstLink = $scope.data.items[0] || null;
 
                                         if (firstLink) {
@@ -52,7 +53,6 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                                                 'callback': 'JSON_CALLBACK'
                                             }).$promise.then(function (data) {
                                                     $scope.readme = atob(data.data.content || "");
-                                                    console.log($scope.readme)
                                                 });
                                         }
                                     }
@@ -102,7 +102,8 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                         }).$promise.then(function (data) {
                                 if (angular.isDefined(data.data)) {
                                     $scope.data = data.data;
-                                    if( angular.isDefined($scope.data)) {
+                                    $scope.readme = "";
+                                    if( angular.isDefined($scope.data) && angular.isDefined($scope.data.items)) {
                                         firstLink = $scope.data.items[0] || null;
 
                                         if (firstLink) {

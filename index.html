@@ -5,47 +5,15 @@
     <title>Github Instance Search</title>
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
-<body>
-<div class="container" ng-controller="githubInstance">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <input type="text"
-                   required="required"
-                   ng-model="searchToken"
-                   class="form-control"
-                   ng-model-options="{ debounce: 500 }"
-                   ng-change="fetch_links()">
-            <br/>
-
-            <p> Total Repository Found :
-                <strong ng-bind="data.total_count"></strong>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-
-            <!--list-->
-            <div class="well" ng-repeat="repo in data.items track by $index">
-                <span class="glyphicon glyphicon-link"></span>
-                <a href="{{repo.html_url}}">{{repo.full_name}}</a>
-                <p>Language: {{repo.language}}</p>
-                <a href="{{repo.owner.html_url}}">Owner: {{repo.owner.login}}</a>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <!--preview-->
-        </div>
-
-    </div>
-
+<body ng-controller="githubInstance">
+<div my-header></div>
+<div class="container">
+    <hr>
+    <div my-result></div>
 </div>
-
 <script src="./bower_components/jquery/dist/jquery.js"></script>
 <script src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="./bower_components/angular/angular.js"></script>
-<!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular.min.js"></script>-->
 <script src="./bower_components/angular-resource/angular-resource.js"></script>
 <script src="./app.js"></script>
 </body>
