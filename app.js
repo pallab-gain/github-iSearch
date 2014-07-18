@@ -20,7 +20,7 @@ angular.module('mySearchGitFactory', [])
         return searchReadme;
     });
 
-angular.module('mySearchGitDirective', ['mySearchGitFactory','ngAnimate'])
+angular.module('mySearchGitDirective', ['mySearchGitFactory'])
     .directive('myHeader', ['searchRepo', 'searchReadme', function (searchRepo, searchReadme) {
         return {
             restrict: "A",
@@ -125,7 +125,7 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory','ngAnimate'])
         }
     }]);
 
-angular.module("githubInstance", ['ngAnimate','ngResource', 'mySearchGitDirective'])
+angular.module("githubInstance", ['ngResource', 'mySearchGitDirective'])
     .controller('githubInstance', function ($scope, searchRepo) {
 //        console.log('main controller');
     });
