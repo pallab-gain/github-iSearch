@@ -11,15 +11,25 @@ angular.module('mySearchGitFactory', [])
     })
     .factory('myResource', function () {
         return {'name': 'pallab'}
+    })
+    .factory('searchReadme', function ($resource) {
+        var searchReadme = $resource('https://api.github.com/repos/:owner/:repo/readme',
+            {},
+            {'get': {'method': 'JSONP', 'cache': true}}
+        );
+        return searchReadme;
     });
+
 angular.module('mySearchGitDirective', ['mySearchGitFactory'])
-    .directive('myHeader', ['searchRepo', function (searchRepo) {
+    .directive('myHeader', ['searchRepo', 'searchReadme', function (searchRepo, searchReadme) {
         return {
             restrict: "A",
             replace: 'true',
             templateUrl: './views/header.html',
             controller: function ($scope) {
+                var firstLink = null;
                 $scope.fetch_links = function (token) {
+                    $scope.index = 1;
                     token = (token && token.trim().replace(/ /g, '+') );
                     if (angular.isDefined(token) && token != null) {
                         searchRepo.get({
@@ -32,7 +42,20 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                         }).$promise.then(function (data) {
                                 if (angular.isDefined(data.data)) {
                                     $scope.data = data.data;
-                                    console.log($scope.data);
+                                    if( angular.isDefined($scope.data)) {
+                                        firstLink = $scope.data.items[0] || null;
+
+                                        if (firstLink) {
+                                            searchReadme.get({
+                                                'owner': firstLink.owner.login,
+                                                'repo': firstLink.name,
+                                                'callback': 'JSON_CALLBACK'
+                                            }).$promise.then(function (data) {
+                                                    $scope.readme = atob(data.data.content || "");
+                                                    console.log($scope.readme)
+                                                });
+                                        }
+                                    }
                                 }
                             });
 
@@ -43,7 +66,7 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                 //console.log('scope ', myResource.name, myResource.data);
             }
         }
-    }]).directive('myResult', ['searchRepo', function (searchRepo) {
+    }]).directive('myResult', ['searchRepo', 'searchReadme', function (searchRepo, searchReadme) {
         return {
             restrict: "A",
             replace: 'true',
@@ -53,6 +76,7 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                 console.log(scope.data);
             },
             controller: function ($scope) {
+                var firstLink = null;
                 $scope.index = 1;
                 $scope.fetch_data = function (type) {
                     var token = $scope.searchToken;
@@ -61,7 +85,7 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                         $scope.index = Math.max($scope.index, 1);
                     } else {
                         $scope.index += 1;
-                        if ($scope.index > Math.ceil($scope.data.total_count/5)) {
+                        if ($scope.index > Math.ceil($scope.data.total_count / 5)) {
                             $scope.index -= 1;
                         }
                     }
@@ -78,7 +102,19 @@ angular.module('mySearchGitDirective', ['mySearchGitFactory'])
                         }).$promise.then(function (data) {
                                 if (angular.isDefined(data.data)) {
                                     $scope.data = data.data;
-                                    console.log($scope.data);
+                                    if( angular.isDefined($scope.data)) {
+                                        firstLink = $scope.data.items[0] || null;
+
+                                        if (firstLink) {
+                                            searchReadme.get({
+                                                'owner': firstLink.owner.login,
+                                                'repo': firstLink.name,
+                                                'callback': 'JSON_CALLBACK'
+                                            }).$promise.then(function (data) {
+                                                    $scope.readme = atob(data.data.content || "");
+                                                });
+                                        }
+                                    }
                                 }
                             });
 
